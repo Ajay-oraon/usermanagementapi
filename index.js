@@ -40,7 +40,9 @@ app.post("/users", async (req, res) => {
     const newUser = new User({ username, name, email, age });
     await newUser.save();
 
-    res.status(201).json({ message: "User created successfully", user: newUser });
+    res
+      .status(201)
+      .json({ message: "User created successfully", user: newUser });
   } catch (error) {
     if (error.code === 11000) {
       return res.status(400).json({ error: "Username already exists" });
@@ -63,7 +65,11 @@ app.put("/users/:id", async (req, res) => {
     }
 
     // Find and update user
-    const updatedUser = await User.findByIdAndUpdate(id, { name, email, age }, { new: true, runValidators: true });
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { name, email, age },
+      { new: true, runValidators: true }
+    );
 
     if (!updatedUser) {
       return res.status(404).json({ error: "User not found" });
@@ -101,5 +107,5 @@ app.delete("/users/:id", async (req, res) => {
 });
 
 // Start Server
-const PORT = 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
