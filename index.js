@@ -16,9 +16,10 @@ mongoose
 
 // User Schema & Model
 const UserSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  age: Number,
+  username: { type: String, required: true, unique: true }, // ✅ Ensure it's unique
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  age: { type: Number, required: true },
 });
 
 const User = mongoose.model("User", UserSchema);
